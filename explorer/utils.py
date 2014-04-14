@@ -5,6 +5,8 @@ from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.views import LoginView
 from django.contrib.auth import REDIRECT_FIELD_NAME
 from sqlparse import format as sql_format
+from six import text_type
+from django.contrib.auth.views import redirect_to_login
 
 from explorer import app_settings
 
@@ -53,6 +55,15 @@ def swap_params(sql, params):
         sql = regex.sub(str(v), sql)
     return sql
 
+def swap_params(sql, params):
+    p = params.items() if params else {}
+    for k, v in p:
+        if isinstance(v,list):
+            value = ','.join(['%s' % i for i in v])
+        else:
+            value = '%s' % v
+        sql = sql.replace(param(k), value)
+    return sql
 
 def extract_params(text):
     regex = re.compile(r"\$\$([a-z0-9_]+)(?:\:([^\$]+))?\$\$")
@@ -60,7 +71,7 @@ def extract_params(text):
     return {p[0]: p[1] if len(p) > 1 else '' for p in params}
 
 
-def safe_login_prompt(request):
+def safe_admin_login_prompt(request):
     defaults = {
         'template_name': 'admin/login.html',
         'authentication_form': AuthenticationForm,
@@ -71,6 +82,10 @@ def safe_login_prompt(request):
         },
     }
     return LoginView.as_view(**defaults)(request)
+
+
+def safe_login_prompt(request):
+    return redirect_to_login(app_settings.EXPLORER_LOGIN_URL)
 
 
 def shared_dict_update(target, source):

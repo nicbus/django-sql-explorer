@@ -66,4 +66,4 @@ class QueryForm(ModelForm):
 
     class Meta:
         model = Query
-        fields = ['title', 'sql', 'description', 'snapshot', 'connection']
+        fields = ['title', 'sql', 'description', 'snapshot', 'connection', 'is_public']

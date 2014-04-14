@@ -128,3 +128,4 @@ FROM_EMAIL = getattr(
 )
 
 UNSAFE_RENDERING = getattr(settings, "EXPLORER_UNSAFE_RENDERING", False)
+EXPLORER_LOGIN_URL = getattr(settings, 'EXPLORER_LOGIN_URL', None)

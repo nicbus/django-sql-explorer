@@ -16,6 +16,7 @@ from explorer.utils import (
     get_params_for_url,
     get_valid_connection
 )
+from django.utils.translation import ugettext_lazy as _
 
 MSG_FAILED_BLACKLIST = "Query failed the SQL blacklist: %s"
 
@@ -24,9 +25,9 @@ logger = logging.getLogger(__name__)
 
 
 class Query(models.Model):
-    title = models.CharField(max_length=255)
+    title = models.CharField(_('Title'), max_length=255)
     sql = models.TextField(blank=False, null=False)
-    description = models.TextField(blank=True)
+    description = models.TextField(_('Description'), blank=True)
     created_by_user = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         null=True,
@@ -34,6 +35,7 @@ class Query(models.Model):
         on_delete=models.CASCADE
     )
     created_at = models.DateTimeField(auto_now_add=True)
+    is_public = models.BooleanField(default=False)
     last_run_date = models.DateTimeField(auto_now=True)
     snapshot = models.BooleanField(
         default=False,
@@ -49,6 +51,19 @@ class Query(models.Model):
             "Will use EXPLORER_DEFAULT_CONNECTION if left blank"
         )
     )
+    query_editor = models.BooleanField(default=False)
+    table =  models.TextField(null=True, blank=True)
+    columns = models.TextField(null=True, blank=True)
+    rows =  models.TextField(null=True, blank=True)
+    obs_values =  models.TextField(null=True, blank=True)
+    aggregations =  models.TextField(null=True, blank=True)
+    filters =  models.TextField(null=True, blank=True)
+    agg_filters =  models.TextField(null=True, blank=True)
+    include_code = models.BooleanField(default=False)
+    open_data = models.BooleanField(default=False)
+    range = models.BooleanField(default=False)
+    not_sel_aggregations = models.TextField(null=True, blank=True)
+    not_agg_selection_value = models.TextField(null=True, blank=True)
 
     def __init__(self, *args, **kwargs):
         self.params = kwargs.get('params')
