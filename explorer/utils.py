@@ -12,10 +12,11 @@ import json
 import re
 import string
 from explorer import app_settings
-from django.db import connections, connection, models, DatabaseError
 from django.http import HttpResponse
 from six.moves import cStringIO
 import sqlparse
+from django.db import connections, connection, models, transaction, DatabaseError
+from django.contrib.auth.views import redirect_to_login
 
 EXPLORER_PARAM_TOKEN = "$$"
 
@@ -83,6 +84,15 @@ def swap_params(sql, params):
         sql = sql.replace(param(k), str(v))
     return sql
 
+def swap_params(sql, params):
+    p = params.items() if params else {}
+    for k, v in p:
+        if isinstance(v,list):
+            value = ','.join(['%s' % i for i in v])
+        else:
+            value = '%s' % v
+        sql = sql.replace(param(k), value)
+    return sql
 
 def extract_params(text):
     regex = re.compile("\$\$([a-zA-Z0-9_|-]+)\$\$")
@@ -155,6 +165,10 @@ def safe_admin_login_prompt(request):
         },
     }
     return login(request, **defaults)
+
+
+def safe_login_prompt(request):
+    return redirect_to_login(app_settings.EXPLORER_LOGIN_URL)
 
 
 def shared_dict_update(target, source):

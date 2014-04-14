@@ -4,7 +4,7 @@ from explorer.actions import generate_report_action
 
 
 class QueryAdmin(admin.ModelAdmin):
-    list_display = ('title', 'description', 'created_by_user',)
+    list_display = ('title', 'description', 'created_by_user', 'sql', 'is_public', 'last_run_date')
     list_filter = ('title',)
     raw_id_fields = ('created_by_user',)
     
