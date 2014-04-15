@@ -106,6 +106,15 @@ def swap_params(sql, params):
         sql = sql.replace(param(k), str(v))
     return sql
 
+def swap_params(sql, params):
+    p = params.items() if params else {}
+    for k, v in p:
+        if isinstance(v,list):
+            value = ','.join([i for i in v])
+        else:
+            value = str(v)
+        sql = sql.replace(param(k), value)
+    return sql
 
 def extract_params(text):
     regex = re.compile("\$\$([a-zA-Z0-9_|-]+)\$\$")
