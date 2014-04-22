@@ -110,9 +110,9 @@ def swap_params(sql, params):
     p = params.items() if params else {}
     for k, v in p:
         if isinstance(v,list):
-            value = ','.join([str(i) for i in v])
+            value = ','.join(['%s' % i for i in v])
         else:
-            value = str(v)
+            value = '%s' % v
         sql = sql.replace(param(k), value)
     return sql
 
