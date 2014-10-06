@@ -1,14 +1,15 @@
 from explorer.utils import passes_blacklist, write_csv, swap_params, execute_query, execute_and_fetch_query, extract_params, shared_dict_update
 from django.db import models, DatabaseError
 from django.core.urlresolvers import reverse
+from django.utils.translation import ugettext_lazy as _
 
 MSG_FAILED_BLACKLIST = "Query failed the SQL blacklist."
 
 
 class Query(models.Model):
-    title = models.CharField(max_length=255)
-    sql = models.TextField()
-    description = models.TextField(null=True, blank=True)
+    title = models.CharField(_('Title'), max_length=255)
+    sql = models.TextField(null=True, blank=True)
+    description = models.TextField(_('Description'), null=True, blank=True)
     created_by = models.CharField(max_length=255, null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     is_public = models.BooleanField(default=False)
