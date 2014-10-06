@@ -12,7 +12,7 @@ class Query(models.Model):
     created_by = models.CharField(max_length=255, null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     is_public = models.BooleanField(default=False)
-     query_editor = models.BooleanField(default=False)
+    query_editor = models.BooleanField(default=False)
     last_run_date = models.DateTimeField(auto_now=True)
     table =  models.TextField(null=True, blank=True)
     columns = models.TextField(null=True, blank=True)
