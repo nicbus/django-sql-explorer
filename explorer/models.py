@@ -19,6 +19,7 @@ class Query(models.Model):
     rows =  models.TextField(null=True, blank=True)
     aggregations =  models.TextField(null=True, blank=True)
     filters =  models.TextField(null=True, blank=True)
+    agg_filters =  models.TextField(null=True, blank=True)
 
     params = {}
 
