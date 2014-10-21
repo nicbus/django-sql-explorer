@@ -18,7 +18,7 @@ class Query(models.Model):
     table =  models.TextField(null=True, blank=True)
     columns = models.TextField(null=True, blank=True)
     rows =  models.TextField(null=True, blank=True)
-    selected_obs_values =  models.TextField(null=True, blank=True)
+    obs_values =  models.TextField(null=True, blank=True)
     aggregations =  models.TextField(null=True, blank=True)
     filters =  models.TextField(null=True, blank=True)
     agg_filters =  models.TextField(null=True, blank=True)
