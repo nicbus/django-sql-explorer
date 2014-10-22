@@ -22,6 +22,7 @@ class Query(models.Model):
     aggregations =  models.TextField(null=True, blank=True)
     filters =  models.TextField(null=True, blank=True)
     agg_filters =  models.TextField(null=True, blank=True)
+    include_code = models.BooleanField(default=False)
     open_data = models.BooleanField(default=False)
 
     params = {}
