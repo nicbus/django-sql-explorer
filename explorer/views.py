@@ -12,13 +12,13 @@ from explorer.actions import generate_report_action
 from explorer.models import Query
 from explorer.app_settings import EXPLORER_PERMISSION_VIEW, EXPLORER_PERMISSION_CHANGE, EXPLORER_RECENT_QUERY_COUNT
 from explorer.forms import QueryForm
-from explorer.utils import url_get_rows, url_get_query_id, schema_info, url_get_params, safe_admin_login_prompt
+from explorer.utils import url_get_rows, url_get_query_id, schema_info, url_get_params, safe_login_prompt
 
 
 def view_permission(f):
     def wrap(request, *args, **kwargs):
         if not EXPLORER_PERMISSION_VIEW(request.user):
-            return safe_admin_login_prompt(request)
+            return safe__login_prompt(request)
         return f(request, *args, **kwargs)
     return wrap
 
@@ -26,7 +26,7 @@ def view_permission(f):
 def change_permission(f):
     def wrap(request, *args, **kwargs):
         if not EXPLORER_PERMISSION_CHANGE(request.user):
-            return safe_admin_login_prompt(request)
+            return safe_login_prompt(request)
         return f(request, *args, **kwargs)
     return wrap
 

@@ -6,6 +6,7 @@ import re
 from time import time
 from explorer import app_settings
 from django.db import connections, connection, models, transaction, DatabaseError
+from django.contrib.auth.views import redirect_to_login
 
 EXPLORER_PARAM_TOKEN = "$$"
 
@@ -145,6 +146,10 @@ def safe_admin_login_prompt(request):
         },
     }
     return login(request, **defaults)
+
+
+def safe_login_prompt(request):
+    return redirect_to_login(app_settings.EXPLORER_LOGIN_URL)
 
 
 def shared_dict_update(target, source):
