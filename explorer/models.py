@@ -24,6 +24,9 @@ class Query(models.Model):
     agg_filters =  models.TextField(null=True, blank=True)
     include_code = models.BooleanField(default=False)
     open_data = models.BooleanField(default=False)
+    range = models.BooleanField(default=False)    
+    not_sel_aggregations = models.TextField(null=True, blank=True)
+    not_agg_selection_value = models.TextField(null=True, blank=True)
 
     params = {}
 
