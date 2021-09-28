@@ -18,7 +18,7 @@ class Query(models.Model):
     title = models.CharField(_('Title'), max_length=255)
     sql = models.TextField(null=True, blank=True)
     description = models.TextField(_('Description'), null=True, blank=True)
-    created_by_user = models.ForeignKey(settings.AUTH_USER_MODEL, null=True, blank=True)
+    created_by_user = models.ForeignKey(settings.AUTH_USER_MODEL, null=True, blank=True, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     is_public = models.BooleanField(default=False)
     last_run_date = models.DateTimeField(auto_now=True)
