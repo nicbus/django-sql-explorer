@@ -324,15 +324,29 @@ class ColumnSummary:
         self._header = header
         self._stats = [
             ColumnStat("Sum", sum),
-            ColumnStat("Avg", lambda x: float(sum(x)) / float(len(x))),
+            ColumnStat("Avg", self.average),
             ColumnStat("Min", min),
             ColumnStat("Max", max),
-            ColumnStat("NUL", lambda x: int(sum(map(lambda y: 1 if y is None else 0, x))), 0, True)
+            ColumnStat("NUL", self.nul, 0, True)
         ]
-        without_nulls = list(map(lambda x: 0 if x is None else x, col))
+        without_nulls = list(map(self.zero_one, col))
 
         for stat in self._stats:
             stat(col) if stat.handles_null else stat(without_nulls)
+
+    @staticmethod
+    def average(x):
+        return float(sum(x)) / float(len(x))
+
+    @staticmethod
+    def nul(x):
+        def one_zero(y):
+            return 1 if y is None else 0
+        return int(sum(map(one_zero, x)))
+
+    @staticmethod
+    def zero_one(x):
+        return 0 if x is None else x
 
     @property
     def stats(self):

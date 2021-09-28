@@ -4,7 +4,7 @@ from django.db import models, migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('explorer', '0001_initial'),
+        ('explorer', '0001_south_to_django_fix'),
     ]
 
     operations = [
